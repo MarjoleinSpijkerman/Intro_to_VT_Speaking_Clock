@@ -6,7 +6,8 @@ from scipy.io.wavfile import read, write # we use SciPy's read function to read 
 from IPython.display import Audio, display
 
 class Clock:
-  def __init__(self, sample_rate = 44100, timezone = 'Europe/Amsterdam'):
+  #def __init__(self, sample_rate = 44100, timezone = 'Europe/Amsterdam'):	
+  def __init__(self, timezone, sample_rate = 44100):
     self.timezone = timezone
     self.sample_rate = 44100
     self.minutes = 0
@@ -16,6 +17,7 @@ class Clock:
     print("Amsterdam time:", datetime.now(pytz.timezone(self.timezone)).strftime("%H:%M"))
 
   def find_time(self):
+    print(self.timezone)
     return (int(datetime.now(pytz.timezone(self.timezone)).strftime("%H")), int(datetime.now(pytz.timezone(self.timezone)).strftime("%M")))
 
   def create_audio_number(self, number):
@@ -157,7 +159,9 @@ class Clock:
     self.hours, self.minutes = self.find_time()
     return self.create_full_audio_complex(self.hours, self.minutes), self.sample_rate
 
-    
+  def new_time_zone(self, timezone):
+    self.timezone = timezone
+    return
 
 
 
@@ -165,13 +169,28 @@ class Clock:
 from tkinter import *
 import pygame
 
-new = Clock() 
+new = Clock("CET") 
 root = Tk()
 root.title('Speaking Clock')
  
 #root.geometry("500x400")
 root.attributes('-zoomed', True)
- 
+
+#OPTIONS = ["Europe/Amsterdam", "CET", "EET", "EST", "GMT", "Greenwich", "HST", "MET", "MST", "NZ"]
+#OPTIONS = ["CET", "Greenwich", "ACST", "AFT", "AKST", "AST", "CAT", "CST", "EAT", "EET", "EST", "MSK", "MST", "PST", "WAT"]
+OPTIONS = ["Europe/Amsterdam", "Greenwich", "Australia/Sydney", "Canada/Central", "Europe/Moscow", "Japan", "US/Pacific", "US/Central", "US/Hawaii"]
+variable = StringVar(root)
+variable.set(OPTIONS[0]) # default value
+w = OptionMenu(root, variable, *OPTIONS)
+w.pack()
+
+def change_time_zone():
+    zone = variable.get()
+    new.new_time_zone(zone)
+
+button_time_zone = Button(root, text="OK", command=change_time_zone)
+button_time_zone.pack()
+
 pygame.mixer.init()# initialise the pygame
  
 def play_complex():
@@ -185,11 +204,13 @@ def play_simple():
     write("audio1.wav", sr, audio.astype(np.int16))
     pygame.mixer.music.load("audio1.wav")
     pygame.mixer.music.play(loops=0)
- 
+
+
 title=Label(root,text="My speaking clock?",bd=9,relief=GROOVE,
             font=("times new roman",50,"bold"),bg="white",fg="Blue")
 title.pack(side=TOP,fill=X)
- 
+
+
 play_button = Button(root, text="Simple time", font=("Helvetica", 32), command=play_simple)
 play_button.pack(pady=20)
 
@@ -253,5 +274,8 @@ sub_btn=Button(root,text = 'Tell me the given time', command = submit).pack()
 #passw_label.grid(row=1,column=0)
 #passw_entry.grid(row=1,column=1)
 #sub_btn.grid(row=2,column=1)
+
+
+
 
 root.mainloop()
