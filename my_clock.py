@@ -167,14 +167,18 @@ class Clock:
 
 
 from tkinter import *
-import pygame
+#import pygame
+import sounddevice as sd
+#import soundfile as sf
+
+
 
 new = Clock("CET") 
 root = Tk()
 root.title('Speaking Clock')
  
-#root.geometry("500x400")
-root.attributes('-zoomed', True)
+root.geometry("500x400")
+#root.attributes('-zoomed', True)
 
 #OPTIONS = ["Europe/Amsterdam", "CET", "EET", "EST", "GMT", "Greenwich", "HST", "MET", "MST", "NZ"]
 #OPTIONS = ["CET", "Greenwich", "ACST", "AFT", "AKST", "AST", "CAT", "CST", "EAT", "EET", "EST", "MSK", "MST", "PST", "WAT"]
@@ -191,19 +195,25 @@ def change_time_zone():
 button_time_zone = Button(root, text="OK", command=change_time_zone)
 button_time_zone.pack()
 
-pygame.mixer.init()# initialise the pygame
+#pygame.mixer.init()# initialise the pygame
  
 def play_complex():
     audio, sr = new.tell_time_complex()
-    write("audio1.wav", sr, audio.astype(np.int16))
-    pygame.mixer.music.load("audio1.wav")
-    pygame.mixer.music.play(loops=0)
+    #write("audio1.wav", sr, audio.astype(np.int16))
+    #pygame.mixer.music.load("audio1.wav")
+    #pygame.mixer.music.play(loops=0)
+    sd.play(audio, sr)
+    status = sd.wait()
 
 def play_simple():
     audio, sr = new.tell_time_simple()
-    write("audio1.wav", sr, audio.astype(np.int16))
-    pygame.mixer.music.load("audio1.wav")
-    pygame.mixer.music.play(loops=0)
+    #write("audio1.wav", sr, audio.astype(np.int16))
+    #pygame.mixer.music.load("audio1.wav")
+    #pygame.mixer.music.play(loops=0)
+    sd.play(audio, sr)
+    status = sd.wait()
+
+
 
 
 title=Label(root,text="My speaking clock?",bd=9,relief=GROOVE,
