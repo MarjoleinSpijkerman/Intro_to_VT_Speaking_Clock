@@ -122,23 +122,36 @@ class Clock:
 
 
 from tkinter import *
-#import pygame
 import sounddevice as sd
-#import soundfile as sf
 
-
-
-new = Clock(timezone = "CET") 
+new = Clock(timezone = "Europe/Amsterdam") 
 root = Tk()
 root.title('Speaking Clock')
- 
-root.geometry("500x400")
-#root.attributes('-zoomed', True)
-#root.attributes('-fullscreen', True)
 root.state('zoomed')
 
-#OPTIONS = ["Europe/Amsterdam", "CET", "EET", "EST", "GMT", "Greenwich", "HST", "MET", "MST", "NZ"]
-#OPTIONS = ["CET", "Greenwich", "ACST", "AFT", "AKST", "AST", "CAT", "CST", "EAT", "EET", "EST", "MSK", "MST", "PST", "WAT"]
+#Create our label
+title=Label(root,text="My speaking clock!",bd=9,relief=GROOVE,
+			font=("times new roman",50,"bold"),bg="white",fg="Blue")
+title.pack(side=TOP,fill=X)
+
+
+lab = Label(root)
+lab.pack()
+
+#Print the current time and Time zone
+def print_time():
+	zone = new.give_time_zone()
+	time = datetime.now(pytz.timezone(zone)).strftime("%H:%M:%S")
+	current_text = f"The current time is {time}\n The current time zone is: {zone} \n" 
+	lab.config(text=current_text)
+	root.after(1000, print_time) # run itself again after 1000 ms
+
+# run first time
+print_time()
+
+
+
+#Creating the time zones and possibility to change time zone
 OPTIONS = ["Europe/Amsterdam", "Greenwich", "Australia/Sydney", "Canada/Central", "Europe/Moscow", "Japan", "US/Pacific", "US/Central", "US/Hawaii"]
 variable = StringVar(root)
 variable.set(OPTIONS[0]) # default value
@@ -152,109 +165,56 @@ def change_time_zone():
 button_time_zone = Button(root, text="OK", command=change_time_zone)
 button_time_zone.pack()
 
-#pygame.mixer.init()# initialise the pygame
- 
-def play_complex():
-	audio, sr = new.tell_time_Dutch()
-	#write("audio1.wav", sr, audio.astype(np.int16))
-	#pygame.mixer.music.load("audio1.wav")
-	#pygame.mixer.music.play(loops=0)
-	sd.play(audio, sr)
-	status = sd.wait()
 
-def play_simple():
+#Play the audio for the time 
+ 
+def play_Dutch():
+	audio, sr = new.tell_time_Dutch()
+	sd.play(audio, sr)
+	#status = sd.wait()
+
+def play_English():
 	print("do nothing for now")
-	#continue
 	#audio, sr = new.tell_time_simple()
-	#write("audio1.wav", sr, audio.astype(np.int16))
-	#pygame.mixer.music.load("audio1.wav")
-	#pygame.mixer.music.play(loops=0)
 	#sd.play(audio, sr)
 	#status = sd.wait()
 
-lab = Label(root)
-lab.pack()
-
-def clock():
-    #time = datetime.datetime.now().strftime("Time: %H:%M:%S")
-	zone = new.give_time_zone()
-	time = datetime.now(pytz.timezone(zone)).strftime("%H%M")
-	lab.config(text=time)
-    #lab['text'] = time
-	root.after(1000, clock) # run itself again after 1000 ms
-
-# run first time
-clock()
-
-
-title=Label(root,text="My speaking clock?",bd=9,relief=GROOVE,
-			font=("times new roman",50,"bold"),bg="white",fg="Blue")
-title.pack(side=TOP,fill=X)
-
-
-play_button = Button(root, text="Simple time", font=("Helvetica", 32), command=play_simple)
+play_button = Button(root, text="What is the time?", font=("Helvetica", 32), command=play_English)
 play_button.pack(pady=20)
 
-play_button2 = Button(root, text="Complex time", font=("Helvetica", 32), command=play_complex)
-play_button2.pack(pady=20)
-
-
-
-
-
-# declaring string variable
-# for storing name and password
-name_var=StringVar()
-passw_var=StringVar()
+play_button2 = Button(root, text="Hoe laat is het?", font=("Helvetica", 32), command=play_Dutch)
+play_button2.pack(pady=20)	
+	
+	
+	
+	
+#Create the code to say the time in a specific language 
+# declaring string variable for the hour and minute
+hour_var=StringVar()
+minute_var=StringVar()
  
-  
-# defining a function that will
-# get the name and password and
-# print them on the screen
 def submit():
+	language = variable1.get()
+	hour=hour_var.get()
+	minute=minute_var.get()
+	
+	if language == "English":
+		print("Add functionality for English")
+	else:
+		audio, sr = new.say_time_Dutch(int(hour), int(minute))
+		sd.play(audio, sr)
+	
  
-	name=name_var.get()
-	password=passw_var.get()
-	
-	audio, sr = new.say_time_Dutch(int(name), int(password))
-	write("audio1.wav", sr, audio.astype(np.int16))
-	pygame.mixer.music.load("audio1.wav")
-	pygame.mixer.music.play(loops=0)
-	
-	
-	#print("The name is : " + name)
-	#print("The password is : " + password)
-	 
-	#name_var.set("")
-	#passw_var.set("")
-	 
-	 
-# creating a label for
-# name using widget Label
-name_label = Label(root, text = 'Hour', font=('calibre',10, 'bold'))
-  
-# creating a entry for input
-# name using widget Entry
-name_entry = Entry(root,textvariable = name_var, font=('calibre',10,'normal')).pack()
-  
-# creating a label for password
-passw_label = Label(root, text = 'Minute', font = ('calibre',10,'bold'))
-  
-# creating a entry for password
-passw_entry=Entry(root, textvariable = passw_var, font = ('calibre',10,'normal')).pack()
-  
-# creating a button using the widget
-# Button that will call the submit function
+hour_entry = Entry(root,textvariable = hour_var, font=('calibre',10,'normal')).pack()
+minute_entry=Entry(root, textvariable = minute_var, font = ('calibre',10,'normal')).pack()
 sub_btn=Button(root,text = 'Tell me the given time', command = submit).pack()
   
-# placing the label and entry in
-# the required position using grid
-# method
-#name_label.grid(row=0,column=0)
-#name_entry.grid(row=0,column=1)
-#passw_label.grid(row=1,column=0)
-#passw_entry.grid(row=1,column=1)
-#sub_btn.grid(row=2,column=1)
+#Creating the time zones and possibility to change time zone
+OPTIONS = ["Dutch", "English"]
+variable1 = StringVar(root)
+variable1.set(OPTIONS[0]) # default value
+w = OptionMenu(root, variable1, *OPTIONS)
+w.pack()
 
 
 
