@@ -1,16 +1,18 @@
 # Introduction to Voice Technology
 ## Assignment 3: Speaking Clock
+### by Sarah Faste and Marjolein Spijkerman
 
-Main language: Dutch
-contains GUI that has the following options:
-- Say the current time in a simple manner
-- Say the current time in a more complex manner
-- Say a specifically given time
+### Small description of functionality
+- languages: Dutch, English
+- Functionality: Tells you current time 
+- Possibile to change timezone
 
-
-to do
+### Required packages and installation
 - add list of necessary downloads to run code
-- add functionality so that you can choose a time zone from list
-- add 1 extra language plus functionality to choose language
-- change GUI such that buttons are next to each other et cetera
-- add button that prints the current time as text
+- 
+### How to run the code
+
+### Description of workflow and design choices
+
+
+
