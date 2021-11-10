@@ -13,16 +13,117 @@ class Clock:
 		print(self.timezone)
 		return (int(datetime.now(pytz.timezone(self.timezone)).strftime("%H")), int(datetime.now(pytz.timezone(self.timezone)).strftime("%M")))
 
-	
 	def change_time_zone(self, timezone):
 		self.timezone = timezone
 	
 	def give_time_zone(self):
 		return self.timezone
 	
+	def create_audio_signal_English(self, hours, minutes):
+		if hours in range(0,6):
+			time_of_day = "in_the_morning"
+		elif hours in range(6,12):
+			time_of_day = "in_the_morning"
+		elif hours in range(12, 18):
+			time_of_day = "in_the_afternoon"
+		else:
+			time_of_day = "in_the_evening"
+	
+		converted_hours = int(datetime.strptime(str(hours), "%H").strftime("%I"))
+		if converted_hours == 0:
+			converted_hours = 12
+
+		_, audio_time_of_day = read("Audio_English/" + time_of_day + ".wav")
+		_, audio_it = read("Audio_English/it.wav")
+		_, audio_is = read("Audio_English/is.wav")
+		_, audio_half_past = read("Audio_English/half_past.wav")
+		_, audio_quarter_past = read("Audio_English/quarter_past.wav")
+		_, audio_quarter_to = read("Audio_English/quarter_to.wav")
+		_, audio_past = read("Audio_English/past.wav")
+		_, audio_in_the_morning = read("Audio_English/in_the_morning.wav")
+		_, audio_in_the_evening = read("Audio_English/in_the_evening.wav")
+		_, audio_in_the_afternoon = read("Audio_English/in_the_afternoon.wav")
+		_, audio_to = read("Audio_English/to.wav")
+	
+
+		if minutes == 0:
+			_, audio_hours = read(("Audio_English/" + str(converted_hours) + ".wav"))
+			return np.concatenate((audio_it, audio_is, audio_hours, audio_time_of_day))
+		
+		if minutes == 15:
+			_, audio_hours = read(("Audio_English/" + str(converted_hours) + ".wav"))
+			return np.concatenate((audio_it, audio_is, audio_quarter_past, audio_hours, audio_time_of_day))
+	
+		elif minutes == 30:
+			if converted_hours == 12:
+				converted_hours = 1
+			else:
+				converted_hours +=1
+			
+			_, audio_hours = read(("Audio_English/" + str(converted_hours) + ".wav"))
+			return np.concatenate((audio_it, audio_is, audio_half_past, audio_hours, audio_time_of_day))
+	
+		elif minutes == 45:
+			if converted_hours == 12:
+				converted_hours = 1
+			else:
+				converted_hours +=1
+			
+			_, audio_hours = read(("Audio_English/" + str(converted_hours) + ".wav"))
+			return np.concatenate((audio_it, audio_is, audio_quarter_to, audio_hours, audio_time_of_day))
+		
+		elif minutes in range(1, 21):
+			_, audio_hours = read(("Audio_English/" + str(converted_hours) + ".wav"))
+			_, audio_mins = read(("Audio_English/" + str(minutes) + ".wav"))
+			return np.concatenate((audio_it, audio_is, audio_mins, audio_past, audio_hours, audio_time_of_day))
+	
+		elif minutes%10 == 0:
+			if minutes <= 40:
+				_, audio_hours = read(("Audio_English/" + str(converted_hours) + ".wav"))
+				_, audio_mins = read(("Audio_English/" + str(minutes) + ".wav"))
+				return np.concatenate((audio_it, audio_is, audio_mins, audio_past, audio_hours, audio_time_of_day))
+				
+			else:
+				if converted_hours == 12:
+					converted_hours = 1
+				else:
+					converted_hours +=1
+				
+				minutes = 60 - minutes
+				_, audio_hours = read(("Audio_English/" + str(converted_hours) + ".wav"))
+				_, audio_mins = read(("Audio_English/" + str(minutes) + ".wav"))
+				return np.concatenate((audio_it, audio_is, audio_mins, audio_to, audio_hours, audio_time_of_day))
+	  
+		elif minutes in range(21, 41):
+			tens = minutes//10 * 10
+			mins = minutes%10
+
+			_, audio_tens = read(("Audio_English/" + str(tens) + ".wav"))
+			_, audio_mins = read(("Audio_English/" + str(mins) + ".wav"))
+			_, audio_hours = read(("Audio_English/" + str(converted_hours) + ".wav"))
+
+			return np.concatenate((audio_it, audio_is, audio_tens, audio_mins, audio_past, audio_hours, audio_time_of_day))
+			
+		else:
+			minutes = 60 - minutes
+			if converted_hours == 12:
+				converted_hours = 1
+			else:
+				converted_hours +=1
+
+			_, audio_mins = read(("Audio_English/" + str(minutes) + ".wav"))
+			_, audio_hours = read(("Audio_English/" + str(converted_hours) + ".wav"))
+
+			return np.concatenate((audio_it, audio_is, audio_mins, audio_to, audio_hours, audio_time_of_day))		
+
+	def say_time_English(self, hours, minutes):
+		#based on the inserted hours and minutes, create the signal and return it
+		return self.create_audio_signal_English(hours, minutes), self.sample_rate	
+
 	def tell_time_English(self):
+		#based on actual time
 		hours, minutes = self.find_time()
-		#WORK IN PROGRESS
+		return self.create_audio_signal_English(hours, minutes), self.sample_rate	
 
 	
 	
@@ -41,13 +142,13 @@ class Clock:
 		else:
 			time_of_day = "avond"
 		
-		_, audio_time_of_day = read("Clock/" + time_of_day + ".wav")
-		_, audio_het = read("Clock/het.wav")
-		_, audio_is = read("Clock/is.wav")
-		_, audio_half = read("Clock/half.wav")
-		_, audio_voor = read("Clock/voor.wav")
-		_, audio_over = read("Clock/over.wav")
-		_, audio_uur = read("Clock/uur.wav")
+		_, audio_time_of_day = read("Audio_Dutch/" + time_of_day + ".wav")
+		_, audio_het = read("Audio_Dutch/het.wav")
+		_, audio_is = read("Audio_Dutch/is.wav")
+		_, audio_half = read("Audio_Dutch/half.wav")
+		_, audio_voor = read("Audio_Dutch/voor.wav")
+		_, audio_over = read("Audio_Dutch/over.wav")
+		_, audio_uur = read("Audio_Dutch/uur.wav")
 		
 		
 		converted_hours = int(datetime.strptime(str(hours), "%H").strftime("%I"))
@@ -57,7 +158,7 @@ class Clock:
 		
 		#take correct minutes
 		if minutes == 0:
-			_, audio_hours = read(("Clock/" + str(converted_hours) + ".wav"))
+			_, audio_hours = read(("Audio_Dutch/" + str(converted_hours) + ".wav"))
 			return np.concatenate((audio_het, audio_is, audio_hours, audio_uur, audio_time_of_day))
 		
 		elif minutes == 30:
@@ -66,12 +167,12 @@ class Clock:
 			else:
 				converted_hours +=1
 			
-			_, audio_hours = read(("Clock/" + str(converted_hours) + ".wav"))
+			_, audio_hours = read(("Audio_Dutch/" + str(converted_hours) + ".wav"))
 			return np.concatenate((audio_het, audio_is, audio_half, audio_hours, audio_time_of_day))
 		
 		elif minutes in range(1, 16):
-			_, audio_hours = read(("Clock/" + str(converted_hours) + ".wav"))
-			_, audio_mins = read(("Clock/" + str(minutes) + ".wav"))
+			_, audio_hours = read(("Audio_Dutch/" + str(converted_hours) + ".wav"))
+			_, audio_mins = read(("Audio_Dutch/" + str(minutes) + ".wav"))
 			return np.concatenate((audio_het, audio_is, audio_mins, audio_over, audio_hours, audio_time_of_day))
 		
 		elif minutes in range(16, 30):
@@ -80,8 +181,8 @@ class Clock:
 			else:
 				converted_hours +=1
 			
-			_, audio_hours = read(("Clock/" + str(converted_hours) + ".wav"))
-			_, audio_mins = read(("Clock/" + str(30 - minutes) + ".wav"))
+			_, audio_hours = read(("Audio_Dutch/" + str(converted_hours) + ".wav"))
+			_, audio_mins = read(("Audio_Dutch/" + str(30 - minutes) + ".wav"))
 			return np.concatenate((audio_het, audio_is, audio_mins, audio_voor, audio_half, audio_hours, audio_time_of_day))
 		
 		elif minutes in range(31, 45):
@@ -90,8 +191,8 @@ class Clock:
 			else:
 				converted_hours +=1
 			
-			_, audio_hours = read(("Clock/" + str(converted_hours) + ".wav"))
-			_, audio_mins = read(("Clock/" + str(minutes%15) + ".wav"))
+			_, audio_hours = read(("Audio_Dutch/" + str(converted_hours) + ".wav"))
+			_, audio_mins = read(("Audio_Dutch/" + str(minutes%15) + ".wav"))
 			return np.concatenate((audio_het, audio_is, audio_mins, audio_over, audio_half, audio_hours, audio_time_of_day))
 		
 		else:
@@ -100,8 +201,8 @@ class Clock:
 			else:
 				converted_hours +=1
 			
-			_, audio_hours = read(("Clock/" + str(converted_hours) + ".wav"))
-			_, audio_mins = read(("Clock/" + str(60 - minutes) + ".wav"))
+			_, audio_hours = read(("Audio_Dutch/" + str(converted_hours) + ".wav"))
+			_, audio_mins = read(("Audio_Dutch/" + str(60 - minutes) + ".wav"))
 			return np.concatenate((audio_het, audio_is, audio_mins, audio_voor, audio_hours, audio_time_of_day))
 
 	def tell_time_Dutch(self):
@@ -122,6 +223,7 @@ class Clock:
 
 
 from tkinter import *
+import tkinter.font as font
 import sounddevice as sd
 
 new = Clock(timezone = "Europe/Amsterdam") 
@@ -134,8 +236,8 @@ title=Label(root,text="My speaking clock!",bd=9,relief=GROOVE,
 			font=("times new roman",50,"bold"),bg="white",fg="Blue")
 title.pack(side=TOP,fill=X)
 
-
-lab = Label(root)
+my_font = font.Font(size=25, weight="bold")
+lab = Label(root, font = my_font, fg='#6c3e83')
 lab.pack()
 
 #Print the current time and Time zone
@@ -174,9 +276,9 @@ def play_Dutch():
 	#status = sd.wait()
 
 def play_English():
-	print("do nothing for now")
-	#audio, sr = new.tell_time_simple()
-	#sd.play(audio, sr)
+	#print("do nothing for now")
+	audio, sr = new.tell_time_English()
+	sd.play(audio, sr)
 	#status = sd.wait()
 
 play_button = Button(root, text="What is the time?", font=("Helvetica", 32), command=play_English)
@@ -199,7 +301,8 @@ def submit():
 	minute=minute_var.get()
 	
 	if language == "English":
-		print("Add functionality for English")
+		audio, sr = new.say_time_English(int(hour), int(minute))
+		sd.play(audio, sr)
 	else:
 		audio, sr = new.say_time_Dutch(int(hour), int(minute))
 		sd.play(audio, sr)
