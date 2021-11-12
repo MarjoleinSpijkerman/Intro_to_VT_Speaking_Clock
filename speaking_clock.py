@@ -293,13 +293,10 @@ button_time_zone.pack()
 def play_Dutch():
 	audio, sr = new.tell_time_Dutch()
 	sd.play(audio, sr)
-	#status = sd.wait()
 
 def play_English():
-	#print("do nothing for now")
 	audio, sr = new.tell_time_English()
 	sd.play(audio, sr)
-	#status = sd.wait()
 
 play_button = Button(root, text="What is the time?", font=("Helvetica", 32), command=play_English)
 play_button.pack(pady=20)
