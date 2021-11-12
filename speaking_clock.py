@@ -288,7 +288,8 @@ play_button2 = Button(root, text="Hoe laat is het?", font=("Helvetica", 32), com
 play_button2.pack(pady=20)	
 	
 	
-	
+import nltk	
+from nltk.tokenize import sent_tokenize
 	
 #Create the code to say the time in a specific language 
 # declaring string variable for the hour and minute
@@ -300,12 +301,40 @@ def submit():
 	hour=hour_var.get()
 	minute=minute_var.get()
 	
-	if language == "English":
-		audio, sr = new.say_time_English(int(hour), int(minute))
-		sd.play(audio, sr)
+	has_errors = False 
+	#check whether input even is a integer number 
+	if hour.isdigit() == False or minute.isdigit() == False:
+		has_errors = True
+		
+	#if it's a number, make sure it's a correct number
+	elif int(minute) < 0 or int(minute) > 59 or int(hour) < 0 or int(hour) > 23:
+		has_errors = True
+	
+	#Ok the input has an error, thus create the error message 
+	if has_errors == True: 
+		#create error message 
+		error_message = Toplevel() #create a new pop up screen 
+		text_message = "This is an invalid input. \n For hours: insert a number between 0 and 23. \n For minutes: insert a number between 0 and 59."
+		sentences = sent_tokenize(text_message)
+		
+		#create the error message 
+		for i in range(len(sentences)):
+			if i == 0:
+				my_font = font.Font(size=15, weight="bold")
+			else:
+				my_font = font.Font(size=12)
+			label2 = Label(error_message, text=sentences[i], font=my_font) #add the created text message to the pop up screen 
+			label2.pack(side= TOP, anchor="w")
+		
+		closing_button = Button(error_message, text = 'ok', command = error_message.destroy).pack()
+
 	else:
-		audio, sr = new.say_time_Dutch(int(hour), int(minute))
-		sd.play(audio, sr)
+		if language == "English":
+			audio, sr = new.say_time_English(int(hour), int(minute))
+			sd.play(audio, sr)
+		else:
+			audio, sr = new.say_time_Dutch(int(hour), int(minute))
+			sd.play(audio, sr)
 	
  
 hour_entry = Entry(root,textvariable = hour_var, font=('calibre',10,'normal')).pack()
