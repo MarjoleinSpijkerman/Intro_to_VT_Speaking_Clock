@@ -3,13 +3,22 @@
 ### by Sarah Faste and Marjolein Spijkerman
 
 ### Small description of functionality
-- languages: Dutch, English
-- Functionality: Tells you current time 
-- Possibile to change timezone
+- Languages: English and Dutch
+- Function: Will tell you the time in either English or Dutch based in a specific timezone 
+
+The speaking clock is 
+![name-of-you-image](https://your-copied-image-address)
 
 ### Required packages and installation
-- add list of necessary downloads to run code
-- 
+To run the code you need the following packages:
+- datetime
+- pytz
+- numpy
+- scipy
+- tkinter
+- sounddevice
+- nltk 
+
 ### How to run the code
 
 ### Description of workflow and design choices
