@@ -25,8 +25,8 @@ To run the code you need the following packages:
 2. Use either the terminal in Linux or the Anaconda prompt in Windows
 3. Go to the "Intro_to_VT_Speaking_Clock" folder
 4. start the code by running:
-- in Linux: "python3 speaking_clock.py"
-- in Anaconda: "python speaking_clock.py"
+  - in Linux: "python3 speaking_clock.py"
+  - in Anaconda: "python speaking_clock.py"
 5. The code now creates a new window called speaking clock
 
 There are multiple things you can do with the speaking clock:
@@ -38,8 +38,9 @@ There are multiple things you can do with the speaking clock:
     - First, inserting the hours in the first text bar and the minutes in the second text bar. 
     - Then, you can use the menu to indicate whether you want to hear the time in English or in Dutch. 
     - Lastly, when you click on the "Tell me the given time" button, it will then say your inserted time in the language you chose. 
-    - If you insert an invalid input, it will give you an error message. 
-        --> The input for hours should be an integer between 0 and 23, the input for minutes should be an integer between 0 and 59
+    - If you insert an invalid input, it will give you an error message.
+        - The input for hours should be an integer between 0 and 23
+        - The input for minutes should be an integer between 0 and 59
 
 
 ### Description of workflow and design choices
