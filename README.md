@@ -7,7 +7,7 @@
 - Function: Will tell you the time in either English or Dutch based in a specific timezone 
 
 The speaking clock is 
-![name-of-you-image](https://your-copied-image-address)
+![speaking_clock.png](https://github.com/MarjoleinSpijkerman/Intro_to_VT_Speaking_Clock/blob/main/images/speaking_clock.png)
 
 ### Required packages and installation
 To run the code you need the following packages:
