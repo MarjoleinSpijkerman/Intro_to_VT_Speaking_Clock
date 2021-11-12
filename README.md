@@ -29,7 +29,7 @@ To run the code you need the following packages:
   - in Anaconda: "python speaking_clock.py"
 5. The code now creates a new window called speaking clock
 
-There are multiple things you can do with the speaking clock:
+**There are multiple things you can do with the speaking clock:**
 - The clock displays the current time and the current timezone in the top of the screen
 - You can change the timezone by picking a timezone from the list, followed by clicking the change timezone button
 - You can click on the "What is the time?" button, to make the clock tell you the current time in English
