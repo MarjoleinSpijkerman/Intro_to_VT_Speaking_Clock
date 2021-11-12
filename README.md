@@ -35,11 +35,11 @@ There are multiple things you can do with the speaking clock:
 - You can click on the "What is the time?" button, to make the clock tell you the current time in English
 - You can click on the "Hoe laat is het?" button, to make the clock tell you the current time in Dutch
 - You can make the clock say a specific time in a specific language by:
-* First, inserting the hours in the first text bar and the minutes in the second text bar. 
-* Then, you can use the menu to indicate whether you want to hear the time in English or in Dutch. 
-* Lastly, when you click on the "Tell me the given time" button, it will then say your inserted time in the language you chose. 
-* If you insert an invalid input, it will give you an error message. 
---> The input for hours should be an integer between 0 and 23, the input for minutes should be an integer between 0 and 59
+    - First, inserting the hours in the first text bar and the minutes in the second text bar. 
+    - Then, you can use the menu to indicate whether you want to hear the time in English or in Dutch. 
+    - Lastly, when you click on the "Tell me the given time" button, it will then say your inserted time in the language you chose. 
+    - If you insert an invalid input, it will give you an error message. 
+        --> The input for hours should be an integer between 0 and 23, the input for minutes should be an integer between 0 and 59
 
 
 ### Description of workflow and design choices
