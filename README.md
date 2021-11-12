@@ -2,9 +2,9 @@
 ## Assignment 3: Speaking Clock
 ### by Sarah Faste and Marjolein Spijkerman
 
-### Small description of functionality
+### Short description
 - Languages: English and Dutch
-- Function: Will tell you the time in a specific timezone either English or Dutch.
+- Function: Tells you the time in a specific timezone either English or Dutch.
 
 ![speaking_clock.png](https://github.com/MarjoleinSpijkerman/Intro_to_VT_Speaking_Clock/blob/main/images/speaking_clock.png)
 
@@ -49,7 +49,7 @@ To run the code you need the following packages:
   In this section we will be discussing our process of making the speaking clock. We will go through decision making, problem solving, and conclusion from our experience. The two of us ended up really enjoying making this project. We come from vastly different academic backgrounds, which is why we fit into the interdisciplinary nature of the assignment. 
   
   
-  Marjolein is highly experienced in programming, and was able to help Sarah (who has only this current class in programming) through the process. Since we decided to do both Dutch and English, we determined that we would each be recording our native languages. We discussed the different possibilities of telling the time in our native language by dialect, but also the differences between Dutch and English. For example, Dutch uses the notation “27 minutes before 3”, but English does not. While we have the concept of “10 to/until 3” we do not usually subtract from the hour by more than 20 minutes, at least in our personal knowledge of English. We used the notations in both languages like “quarter past”, “half past”, and “quarter to” in addition to exact numbers to make the clock a bit more interesting and dynamic. It also gave us more practice concatenating them to create the full sentence of time in numbers and time of day (ex. evening). 
+  Marjolein is highly experienced in programming, and was able to help Sarah (who has only this current class in programming) through the process. Since we decided to do both Dutch and English, we determined that we would each be recording our native languages. We discussed the different possibilities of telling the time in our native language by dialect, but also the differences between Dutch and English. For example, Dutch uses the notation “3 over half 3” for "14:33", but English does not. While we have the concept of “10 to/until 3” we do not usually subtract from the hour by more than 20 minutes, at least in our personal knowledge of English. We used the notations in both languages like “quarter past”, “half past”, and “quarter to” in addition to exact numbers to make the clock a bit more interesting and dynamic. It also gave us more practice concatenating the individual audio signals to create the full sentence of time in numbers and time of day (ex. evening). 
   
   
   Once we had decided on a format, Marjolein was able to create the Dutch code, then help Sarah create the English version. Marjolein helped Sarah with the English code by offering advice, instruction, and editing help. In the end, we were able to create both a working version of Dutch and English clocks that follow proper syntax in each language. We used our own voices for the recordings, so the ethical implications of recording are not necessary in this case. If we were to use someone else's voice, we would need to comply with data protection requirements and the GDPR. 
