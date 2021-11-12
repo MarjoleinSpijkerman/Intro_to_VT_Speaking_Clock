@@ -4,12 +4,13 @@
 
 ### Small description of functionality
 - Languages: English and Dutch
-- Function: Will tell you the time in either English or Dutch based in a specific timezone 
+- Function: Will tell you the time in a specific timezone either English or Dutch.
 
-The speaking clock is 
 ![speaking_clock.png](https://github.com/MarjoleinSpijkerman/Intro_to_VT_Speaking_Clock/blob/main/images/speaking_clock.png)
 
 ### Required packages and installation
+The code either needs to be run in the terminal in Linux or using the Anaconda prompt in Windows. It cannot be run using Google Colab, due to the code's dependency on the tkinter python library. 
+
 To run the code you need the following packages:
 - datetime
 - pytz
@@ -20,6 +21,21 @@ To run the code you need the following packages:
 - nltk 
 
 ### How to run the code
+1. Download or clone the github page
+2. Use either the terminal in Linux or the Anaconda prompt in Windows
+3. Go to the "Intro_to_VT_Speaking_Clock" folder
+4. start the code by running:
+- in linux: "python3 speaking_clock.py"
+- in anaconda: "python speaking_clock.py"
+5. The code now creates a new window called speaking clock
+
+There are multiple things you can do with the speaking clock:
+- The clock displays the current time and the current timezone in the top of the screen
+- You can change the timezone by picking a timezone from the list, followed by clicking the change timezone button
+- If you click on the "What is the time?" button, it will tell you the current time in English
+- If you click on the "Hoe laat is het?" button, it will tell you the current time in Dutch
+- If you want to hear the system say a specific time, you can insert the hours in the first text bar and the minutes in the second text bar. You can use the menu to indicate whether you want to hear the time in English or in Dutch. When you click on the "Tell me the given time" button, it will then say your inserted time in the language you chose. If you insert an invalid input, it will give you an error message. The input for hours should be an integer between 0 and 23, the input for minutes should be an integer between 0 and 59
+
 
 ### Description of workflow and design choices
 
